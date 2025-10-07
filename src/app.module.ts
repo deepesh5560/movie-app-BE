@@ -8,8 +8,8 @@ import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
-     ConfigModule.forRoot({ isGlobal: true }),
-    MongooseModule.forRoot("mongodb+srv://deepesh5560_db_user:deepesh912@cluster0.7iutgvs.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"),
+     ConfigModule.forRoot({ isGlobal: true , envFilePath: '.env',}),
+    MongooseModule.forRoot(process.env.MONGO_URI || ""),
     MoviesModule,
     AuthModule
   ],

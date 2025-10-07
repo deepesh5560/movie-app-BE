@@ -16,9 +16,27 @@ export class MoviesService {
   }
 
   // Get movies only for logged-in user
-  async findAll(userId: string): Promise<Movie[]> {
-    return this.movieModel.find({ userId }).exec();
-  }
+async findAll(
+  userId: string,
+  options: { page: number; limit: number }
+): Promise<{ movies: Movie[]; page: number; pageSize: number; total: number }> {
+  const { page, limit } = options;
+  const skip = (page - 1) * limit;
+
+  const total = await this.movieModel.countDocuments({ userId });
+  const movies = await this.movieModel
+    .find({ userId })
+    .skip(skip)
+    .limit(limit)
+    .exec();
+
+  return {
+    movies,
+    page,
+    pageSize: limit,
+    total,
+  };
+}
 
   async findOne(id: string, userId: string): Promise<Movie> {
     const movie = await this.movieModel.findOne({ _id: id, userId });
