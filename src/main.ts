@@ -6,7 +6,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
    // Enable CORS
   app.enableCors({
-    origin: ['http://localhost:3000'], // frontend URL(s)
+    origin: ['http://localhost:3000','https://main.d2y22cfsfquwvc.amplifyapp.com'], // frontend URL(s)
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true, // allow cookies
   });
